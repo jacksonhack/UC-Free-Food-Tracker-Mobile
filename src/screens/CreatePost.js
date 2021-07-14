@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState} from 'react'
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
 
 function CreatePost(props) {
   const { navigation } = props
@@ -10,7 +10,9 @@ function CreatePost(props) {
   const [longitude, setLongitude] = useState(0.0);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+      keyboardShouldPersistTaps='handled'
+    >
 
       {/* INPUT FIELDS */}
       <Text style={styles.text}>Enter Title of Event:</Text>
@@ -26,6 +28,7 @@ function CreatePost(props) {
       placeholder = 'e.g. Student Government handing out chicken and fries'
       onChangeText={(val) => setDescription(val)}
       multiline = {true}
+      blurOnSubmit = {true}
       />
 
       <Text style={styles.text}>Enter Latitude of Event:</Text>
@@ -53,7 +56,7 @@ function CreatePost(props) {
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
 
-    </View>
+    </ScrollView>
   )
 }
 

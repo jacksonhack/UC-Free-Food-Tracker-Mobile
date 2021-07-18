@@ -2,6 +2,7 @@ import React from 'react'
 import {useState} from 'react'
 import { StyleSheet, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
 
+import {APIurl} from '../constants/index'
 function CreatePost(props) {
   const { navigation } = props
   const [title, setTitle] = useState('');
@@ -50,8 +51,10 @@ function CreatePost(props) {
       {/* SUBMIT BUTTON */}
       <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Home')
-          //TODO: HIT API HERE TO CREATE (DO INPUT VALIDATION)
+        onPress={() => {
+          createPost(title, description, latitude, longitude)
+          navigation.navigate('Home')
+        }
         }>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
@@ -90,3 +93,24 @@ const styles = StyleSheet.create({
 })
 
 export default CreatePost
+
+// hits the API to create a post
+function createPost(title, description, latitude, longitude) {
+  //replace with your own IP
+  fetch(APIurl, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      foodName: title,
+      latitude: latitude,
+      longitude: longitude,
+      description: description
+    })
+  })
+  .then(response => response.json())
+  .then(json => console.log(json))
+  .catch(err => console.error(err))
+}

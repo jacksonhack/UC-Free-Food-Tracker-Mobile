@@ -36,9 +36,14 @@ class Home extends React.Component {
       data: [],
       isLoading: true
     }
+    this.fetchData = this.fetchData.bind(this)
   }
 
   componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData() {
     fetch(APIurl, {
       method: 'GET',
       headers: {
@@ -56,7 +61,7 @@ class Home extends React.Component {
       .catch(err => console.log(err))
   }
 
-  renderItem({ item }) {
+  renderItem({ item }, props) {
     return (
       <View style={styles.rowContainer}>
         <Text>{item.foodName} {item.description} {item.latitude} {item.longitude} </Text>
@@ -64,6 +69,7 @@ class Home extends React.Component {
           style={styles.buttonContainer}
           onPress = {()=> {
             deletePost(item._id)
+            this.fetchData()
           }}
           >
           <Text style={styles.buttonText}>Delete</Text>
@@ -85,7 +91,7 @@ class Home extends React.Component {
       <FlatList
         numColumns = {1}
         data={this.state.data}
-        renderItem = {this.renderItem}
+        renderItem = {(item) => this.renderItem(item, this.props)}
         keyExtractor= {item => item._id}
       />
     </View>

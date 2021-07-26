@@ -53,7 +53,7 @@ function CreatePost(props) {
         style={styles.buttonContainer}
         onPress={() => {
           createPost(title, description, latitude, longitude)
-          navigation.navigate('Home')
+          navigation.navigate('Home', {title: title})
         }
         }>
         <Text style={styles.buttonText}>Submit</Text>

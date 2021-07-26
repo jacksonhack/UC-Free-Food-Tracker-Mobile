@@ -43,6 +43,10 @@ class Home extends React.Component {
     this.fetchData()
   }
 
+  componentDidUpdate(prevProps) {
+    this.fetchData()
+  }
+
   fetchData() {
     fetch(APIurl, {
       method: 'GET',

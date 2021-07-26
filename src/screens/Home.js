@@ -58,7 +58,17 @@ class Home extends React.Component {
 
   renderItem({ item }) {
     return (
+      <View style={styles.rowContainer}>
         <Text>{item.foodName} {item.description} {item.latitude} {item.longitude} </Text>
+        <TouchableOpacity 
+          style={styles.buttonContainer}
+          onPress = {()=> {
+            deletePost(item._id)
+          }}
+          >
+          <Text style={styles.buttonText}>Delete</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 
@@ -76,7 +86,7 @@ class Home extends React.Component {
         numColumns = {1}
         data={this.state.data}
         renderItem = {this.renderItem}
-        keyExtractor= {item => item.id}
+        keyExtractor= {item => item._id}
       />
     </View>
     )
@@ -90,6 +100,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ebebeb'
+  },
+  rowContainer: {
+    flexDirection: 'row'
   },
   text: {
     color: '#101010',
@@ -109,3 +122,19 @@ const styles = StyleSheet.create({
 })
 
 export default Home
+
+// hits the api and deletes the post
+function deletePost(id) {
+  fetch(APIurl + '/' + id, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log(response)
+    })
+    .catch(err => console.log(err))
+}

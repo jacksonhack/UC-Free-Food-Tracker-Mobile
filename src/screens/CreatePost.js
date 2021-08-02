@@ -65,14 +65,15 @@ function CreatePost(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ebebeb'
+    backgroundColor: '#ebebeb',
+    flexDirection: 'row'
   },
   text: {
     color: '#101010',
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold'
   },
   input: {
@@ -89,6 +90,12 @@ const styles = StyleSheet.create({
       margin: 10,
       width: 300,
       height: 200
+  },
+  buttonContainer: {
+    backgroundColor: '#b40b0b',
+    borderRadius: 5,
+    padding: 10,
+    margin: 20
   }
 })
 

@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   buttonContainer: {
-    backgroundColor: '#222',
+    backgroundColor: '#b40b0b',
     borderRadius: 5,
     padding: 10,
     margin: 20

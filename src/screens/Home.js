@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { Alert, StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { APIurl } from '../constants'
 
 // json list of locations with ids, create_date, foodName, latitude, longitude, longitude, and description
@@ -47,6 +47,18 @@ class Home extends React.Component {
     this.fetchData()
   }
 
+  // asks user if they are sure they want to delete a post
+  open2ButtonDeleteAlert(id) {
+    Alert.alert(
+      'Are you sure you want to delete this post?',
+      '',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
+        {text: 'Delete', onPress: () => deletePost(id)}
+      ]
+    )
+  }
+
   fetchData() {
     fetch(APIurl, {
       method: 'GET',
@@ -72,7 +84,7 @@ class Home extends React.Component {
         <TouchableOpacity 
           style={styles.buttonContainer}
           onPress = {()=> {
-            deletePost(item._id)
+            this.open2ButtonDeleteAlert(item._id)
             this.fetchData()
           }}
           >

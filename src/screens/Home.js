@@ -2,6 +2,8 @@
 import React from 'react'
 import { Alert, StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { APIurl } from '../constants'
+import MapView from 'react-native-maps';
+import {Marker} from 'react-native-maps';
 
 // json list of locations with ids, create_date, foodName, latitude, longitude, longitude, and description
 const sampleData = [
@@ -80,7 +82,7 @@ class Home extends React.Component {
   renderItem({ item }, props) {
     return (
       <View style={styles.rowContainer}>
-        <Text>{item.foodName} {item.description} {item.latitude} {item.longitude} </Text>
+        <Text>{item.foodName} {item.description} </Text>
         <TouchableOpacity 
           style={styles.buttonContainer}
           onPress = {()=> {
@@ -94,16 +96,37 @@ class Home extends React.Component {
     )
   }
 
+  // returns the list of markers for free food locations
+  mapMarkers = () => {
+    return this.state.data.map((item) =>  <Marker
+      key = {item._id}
+      coordinate = {{latitude: Number(item.latitude) , longitude: Number(item.longitude)}}
+      title = {item.foodName}
+      description = {item.description}
+      onPress = {() => console.log('Marker Pressed')}
+    ></Marker>)
+  }
+
   render() { 
     const { navigation } = this.props
     return (
       <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
+      <Text style={styles.text}>Welcome to the UC Free Food Tracker</Text>
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={() => navigation.navigate('Create Post')}>
         <Text style={styles.buttonText}>Create Post</Text>
       </TouchableOpacity>
+      <MapView
+        style = {styles.map}
+        initialRegion={{
+          latitude: 39.1329,
+          longitude: -84.5150,
+          latitudeDelta: 0.0222,
+          longitudeDelta: 0.0221,
+        }} >
+        {this.mapMarkers()}
+        </MapView>
       <FlatList
         numColumns = {1}
         data={this.state.data}
@@ -126,10 +149,12 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row'
   },
+  //centered text
   text: {
     color: '#101010',
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
   buttonContainer: {
     backgroundColor: '#b40b0b',
@@ -140,6 +165,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     color: '#fff'
+  },
+  map: {
+    width: '90%',
+    height: '70%'
   }
 })
 

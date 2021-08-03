@@ -46,7 +46,7 @@ function CreatePost(props) {
       <Text style={styles.text}>Enter Latitude of Event:</Text>
       <TextInput 
       style = {styles.input}
-      keyboardType = 'numeric'
+      //keyboardType = 'numeric'
       placeholder = 'e.g. 39.1329'
       onChangeText={(val) => setLatitude(val)}
       />
@@ -54,7 +54,7 @@ function CreatePost(props) {
       <Text style={styles.text}>Enter Longitude of Event:</Text>
       <TextInput 
       style = {styles.input}
-      keyboardType = 'numeric'
+      //keyboardType = 'numeric'
       placeholder = 'e.g. 84.5150'
       onChangeText={(val) => setLongitude(val)}
       />

@@ -1,14 +1,25 @@
 import React from 'react'
 import {useState} from 'react'
-import { StyleSheet, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
+import {Alert, StyleSheet, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
 
 import {APIurl} from '../constants/index'
 function CreatePost(props) {
   const { navigation } = props
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [latitude, setLatitude] = useState(0.0);
-  const [longitude, setLongitude] = useState(0.0);
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+
+  // one button alert when any input field is left empty
+  const inputValidationAlert = () => {
+    Alert.alert(
+      'Error',
+      'Please fill out all fields',
+      [
+        {text: 'OK', onPress: () => {}}
+      ]
+    )
+  }
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}
@@ -52,6 +63,11 @@ function CreatePost(props) {
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={() => {
+          // alert if any input field is left empty
+          if (title === '' || description === '' || latitude === '' || longitude === '') {
+            inputValidationAlert()
+            return
+          }
           createPost(title, description, latitude, longitude)
           navigation.navigate('Home', {title: title})
         }

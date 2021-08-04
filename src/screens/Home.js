@@ -3,7 +3,7 @@ import React from 'react'
 import { Alert, StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { APIurl } from '../constants'
 import MapView from 'react-native-maps';
-import {Marker} from 'react-native-maps';
+import {Marker, Callout} from 'react-native-maps';
 
 // json list of locations with ids, create_date, foodName, latitude, longitude, longitude, and description
 const sampleData = [
@@ -104,7 +104,19 @@ class Home extends React.Component {
       title = {item.foodName}
       description = {item.description}
       onPress = {() => console.log('Marker Pressed')}
-    ></Marker>)
+    >
+      {/* Callout with delete button that calls delete post on press */}
+      <Callout
+        onPress = {() => this.open2ButtonDeleteAlert(item._id)}
+        >
+        <View style={styles.callout}>
+          <Text style={styles.calloutTitle}>{item.foodName}</Text>
+          <Text style={styles.calloutText}>{item.description}</Text>
+          <Text style={styles.calloutDeleteText}>Tap Again to Delete</Text>
+        </View>
+      </Callout>
+
+    </Marker>)
   }
 
   render() { 
@@ -127,12 +139,12 @@ class Home extends React.Component {
         }} >
         {this.mapMarkers()}
         </MapView>
-      <FlatList
+      {/* <FlatList
         numColumns = {1}
         data={this.state.data}
         renderItem = {(item) => this.renderItem(item, this.props)}
         keyExtractor= {item => item._id}
-      />
+      /> */}
     </View>
     )
   }
@@ -169,6 +181,17 @@ const styles = StyleSheet.create({
   map: {
     width: '90%',
     height: '70%'
+  },
+  calloutTitle: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  calloutText: {
+    fontSize: 12
+  },
+  calloutDeleteText: {
+    fontSize: 12,
+    color: '#b40b0b'
   }
 })
 
